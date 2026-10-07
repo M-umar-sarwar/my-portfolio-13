@@ -1,71 +1,44 @@
 // ================= MOBILE MENU =================
 
 const menuBtn = document.getElementById("menuBtn");
-
 const navLinks = document.getElementById("navLinks");
 
-
-menuBtn.addEventListener("click", () => {
-
-  navLinks.classList.toggle("open");
-
-});
-
-
-// Close menu after clicking a link
-
-document
-  .querySelectorAll(".nav-links a")
-  .forEach(link => {
-
-    link.addEventListener("click", () => {
-
-      navLinks.classList.remove("open");
-
-    });
-
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
   });
 
+  // Close menu after clicking a link
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+    });
+  });
+}
 
 // ================= FOOTER YEAR =================
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
+const yearSpan = document.getElementById("year");
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
 
 // ================= SCROLL ANIMATION =================
 
-const observer = new IntersectionObserver(
+const observerOptions = {
+  threshold: 0.12
+};
 
-  entries => {
-
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting) {
-
-        entry.target.classList.add("visible");
-
-        observer.unobserve(entry.target);
-
-      }
-
-    });
-
-  },
-
-  {
-    threshold: 0.12
-  }
-
-);
-
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      obs.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
 
 // Observe all elements having reveal class
-
-document
-  .querySelectorAll(".reveal")
-  .forEach(element => {
-
-    observer.observe(element);
-
-  });
+document.querySelectorAll(".reveal").forEach((element) => {
+  observer.observe(element);
+});
